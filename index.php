@@ -24,8 +24,44 @@
      */
 
     // TODO Votre code ici, commencez par require un des objet de connexion que nous avons fait ensemble.
+require __DIR__ . '/Config.php';
+require __DIR__ . '/DB_Connect.php';
 
+$stmt = DB_Connect::dbConnect()->prepare("SELECT MIN(age) as min_age FROM user");
+    if ($stmt->execute()) {
+        $min = $stmt->fetch();
+        echo "Age minimum: " . $min['min_age'] . "<br>";
+    }
 
+    $stmt = DB_Connect::dbConnect()->prepare("SELECT MAX(age) as max_age FROM user");
+    if ($stmt->execute()) {
+    $max = $stmt->fetch();
+    echo "Age maximum: " . $max['max_age'] . "<br>";
+    }
+
+    $stmt = DB_Connect::dbConnect()->prepare("SELECT count(*) as number FROM user");
+    if ($stmt->execute()) {
+    $nbr_user = $stmt->fetch();
+    echo "Nombre d'utilisateurs:  " . $nbr_user['number'] . "<br>";
+    }
+
+    $stmt = DB_Connect::dbConnect()->prepare("SELECT count(*) as number FROM user WHERE numero >= 5");
+    if ($stmt->execute()) {
+    $nbr_user = $stmt->fetch();
+    echo "Utilisateurs ayant un numéro de rue plus grand ou égal à 5:  " . $nbr_user['number'] . "<br>";
+    }
+
+    $stmt = DB_Connect::dbConnect()->prepare("SELECT AVG(age) as moy_age FROM user");
+    if ($stmt->execute()) {
+    $moy_age = $stmt->fetch();
+    echo "La moyenne d'âge est de :  " . $moy_age['moy_age'] . "<br>";
+    }
+
+    $stmt = DB_Connect::dbConnect()->prepare("SELECT SUM(numero) as add_num FROM user");
+    if ($stmt->execute()) {
+    $add_age = $stmt->fetch();
+    echo "Le résultat de l'addition entre les numéros de maison est de :  " . $add_age['add_num'] . "<br>";
+    }
     ?>
 </body>
 </html>
